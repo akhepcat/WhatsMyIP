@@ -1,6 +1,8 @@
 #!/bin/bash
-MyV6Int=$(awk 'BEGIN { IGNORECASE=1 } /^00000000000000000000000000000000 00 00000000000000000000000000000000 00 [1-9a-f]/ { print $10 }' /proc/net/ipv6_route | sort -u)
-ALIVE=$(ping6 -w 1 -c 1 plugbase.gci.net 2>&1)
+MyV6Int=$(awk 'BEGIN { IGNORECASE=1 } /^00000000000000000000000000000000 00 00000000000000000000000000000000 00 [1-9a-f]/ { print $10 }' /proc/net/ipv6_route 2>/dev/null | sort -u)
+
+[[ -n "${MyV6Int}" ]] && ALIVE=$(ping6 -w 1 -c 1 plugbase.gci.net 2>&1)
+
 if [ -z "${MyV6Int}" -o $? -eq 1 ]
 then
         echo "def_int=null"
