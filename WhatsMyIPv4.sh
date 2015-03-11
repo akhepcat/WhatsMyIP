@@ -1,6 +1,7 @@
 #!/bin/bash
-MyV4Int=$(awk 'BEGIN { IGNORECASE=1 } /^[a-z0-9]+[ \t]+00000000/ { print $1 }' /proc/net/route)
-ALIVE=$(ping -w 1 -c 1 plugbase.gci.net 2>&1)
+MyV4Int=$(awk 'BEGIN { IGNORECASE=1 } /^[a-z0-9]+[ \t]+00000000/ { print $1 }' /proc/net/route 2>/dev/null | sort -u)
+[[ -n "${MyV4Int}" ]] && ALIVE=$(ping -w 1 -c 1 plugbase.gci.net 2>&1)
+
 if [ -z "${MyV4Int}" -o $? -eq 1 ]
 then
         echo "def_int=null"
