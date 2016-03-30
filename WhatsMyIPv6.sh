@@ -20,7 +20,7 @@ MyIntIPv6=${MyIntIPv6#*inet6 }
 MyIntIPv6=${MyIntIPv6%%/*}
 
 #
-MyExtIPv6=$(curl -stderr /dev/null -6 http://plugbase.gci.net/cgi-bin/whatsmyip.cgi)
+MyExtIPv6=$(curl --connect-timeout 2 --max-time 3 --retry 0 --stderr /dev/null -6 http://plugbase.gci.net/cgi-bin/whatsmyip.cgi)
 
 MyExtIPv6="${MyExtIPv6#*target*http*=}"
 MyExtIPv6=${MyExtIPv6%%\"*}
