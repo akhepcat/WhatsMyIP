@@ -21,7 +21,7 @@ MyIntIPv4=${MyIntIPv4%%brd*}
 MyIntIPv4=${MyIntIPv4%%/*}
 
 # 
-MyExtIPv4=$(curl -stderr /dev/null -4 http://plugbase.gci.net/cgi-bin/whatsmyip.cgi)
+MyExtIPv4=$(curl --connect-timeout 1.5 -stderr /dev/null -4 http://plugbase.gci.net/cgi-bin/whatsmyip.cgi)
 
 MyExtIPv4="${MyExtIPv4#*target*http*=}"
 MyExtIPv4=${MyExtIPv4%%\"*}
