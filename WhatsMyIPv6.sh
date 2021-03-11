@@ -20,7 +20,7 @@ MyIntIPv6=${MyIntIPv6#*inet6 }
 MyIntIPv6=${MyIntIPv6%%/*}
 
 #
-MyExtIPv6=$(curl --connect-timeout 2 --max-time 3 --retry 0 --stderr /dev/null -6 http://ip4.me/api/ | cut -f2 -d,)
+MyExtIPv6=$(curl --connect-timeout 2 --max-time 3 --retry 0 --stderr /dev/null -6 http://ip6.me/api/ | cut -f2 -d,)
 
 echo def_int=${MyV6Int}
 echo int_ip6=${MyIntIPv6}
