@@ -1,7 +1,7 @@
 #!/bin/bash
-MyV6Int=$(awk 'BEGIN { IGNORECASE=1 } /^00000000000000000000000000000000 00 00000000000000000000000000000000 00 [1-9a-f]/ { print $10 }' /proc/net/ipv6_route 2>/dev/null | head -1)
+MyV6Int=$(awk 'BEGIN { IGNORECASE=1 } /^00000000000000000000000000000000 00 00000000000000000000000000000000 00 / { if(!/lo/) print $10}' /proc/net/ipv6_route 2>/dev/null | head -1)
 
-[[ -n "${MyV6Int}" ]] && ALIVE=$(ping6 -w 1 -c 1 plugbase.gci.net 2>&1)
+[[ -n "${MyV6Int}" ]] && ALIVE=$(ping6 -w 1 -c 1 ip6.me 2>&1)
 
 if [ -z "${MyV6Int}" -o $? -eq 1 ]
 then
@@ -20,10 +20,7 @@ MyIntIPv6=${MyIntIPv6#*inet6 }
 MyIntIPv6=${MyIntIPv6%%/*}
 
 #
-MyExtIPv6=$(curl --connect-timeout 2 --max-time 3 --retry 0 --stderr /dev/null -6 http://plugbase.gci.net/cgi-bin/whatsmyip.cgi)
-
-MyExtIPv6="${MyExtIPv6#*target*http*=}"
-MyExtIPv6=${MyExtIPv6%%\"*}
+MyExtIPv6=$(curl --connect-timeout 2 --max-time 3 --retry 0 --stderr /dev/null -6 http://ip4.me/api/ | cut -f2 -d,)
 
 echo def_int=${MyV6Int}
 echo int_ip6=${MyIntIPv6}
